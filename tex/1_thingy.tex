@@ -1,0 +1,367 @@
+\documentclass[twocolumn,draft]{article}
+\usepackage{savetrees}
+% a more conservative option:
+% \documentclass[]{article}
+% \usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{todonotes}
+\usepackage{graphicx}
+\usepackage{showlabels}
+
+\usepackage[english]{babel}
+\usepackage{blindtext}
+% \Blindtext to use.
+
+\RequirePackage[l2tabu, orthodox]{nag}
+\usepackage[all,warning]{onlyamsmath}
+
+\usepackage{hyperref}
+
+% blue text for questions
+\newcommand{\bt}[1]{\textcolor{blue}{#1}}
+
+\title{MA 341, 4/5/17}
+\author{John M. Lynch\footnote{Undergraduate ECE/Physics, NCSU, Raleigh, NC 27705. E-Mail: \texttt{jmlynch3@ncsu.edu}}}
+\date{\today}
+
+\begin{document}
+  \maketitle
+  
+  \section*{Variation of Parameters}
+  
+  \begin{equation}
+  	\frac{dx}{dt} = Ax + \rho(t)
+  \end{equation}
+  
+  elaboration:
+  
+  \begin{align*}
+  	\frac{dx}{dt} = Ax + \rho(t), \\
+	A\in\Re^{n\times n}, \\
+	x = \begin{bmatrix}
+		x_{1} \\
+		\vdots \\
+		x_{n}
+	\end{bmatrix}, \\
+	\rho(t) = \begin{bmatrix}
+				\rho_{1}(t) \\
+				\vdots \\
+				\rho_{n}(t)
+			  \end{bmatrix}
+  \end{align*}
+  
+  then
+  
+  \begin{equation}
+  	\frac{dx}{dt} = Ax
+  \end{equation}
+  
+  \subsection*{1) Find fundamental matrix X(t)} For $X(t)$, a fundamental matrix that solves
+  
+  \begin{align}
+  	\frac{dX}{dt} &= AX \\
+	(\frac{dX}{dt} - AX)C &= 0
+  \end{align}
+  
+  then
+  
+  \begin{equation}
+  	x(t) = X(t)C \text{(general solution)}
+  \end{equation}
+  
+  where
+  
+  \begin{equation*}
+  	C = \begin{bmatrix}
+			C_{1} \\
+			\vdots \\
+			C_{n}
+  		\end{bmatrix}
+  \end{equation*}
+  
+  Find solutions of (1) in the form of
+  
+  \begin{equation*}
+  	x(t) = X(t)\cdot C(t), C(t) = \begin{bmatrix}
+  									C_{1}(t) \\
+									\vdots \\
+									C_{n}(t)
+  								  \end{bmatrix}
+  \end{equation*}
+  
+  substitute in:
+  
+  \begin{equation*}
+  	\frac{dx}{dt} = \boxed{\frac{dX}{dt} \cdot C} + X\cdot \frac{dC}{dt} = \boxed{AXC} + \rho(t)
+  \end{equation*}
+  
+  which leaves
+  
+ \subsection*{2) Find $X^{-1}$}
+ 
+ \subsection*{3) Find $C(t)$}
+  \begin{align*}
+  	\frac{dC}{dt} &= \rho(t) \\
+	\frac{dC}{dt} &= X^{-1}(t)\rho(t) \\
+	C(t) &= \int X^{-1}(t)\rho(t)dt
+  \end{align*}
+  
+  so you have your coefficient column vector $C(t)$.
+  
+  \subsection*{4) General Solution}
+  
+  \begin{equation}
+  	x(t) = X(t) \cdot C(t)
+  \end{equation}
+  
+  % EMPTY COLUMN
+  \newpage
+  
+  \section*{EXAMPLE}
+  
+  \begin{equation}
+  	A = \begin{bmatrix}
+	0 & 1 \\
+	-1 & 0
+  	\end{bmatrix}
+  \end{equation}
+  
+  \begin{equation}
+  	\rho(t) = \begin{bmatrix}
+	8\sin{(t)} \\
+	0
+  	\end{bmatrix}
+  \end{equation}
+  
+  \subsection*{1)}
+  
+  \begin{align*}
+  	\frac{dx}{dt} &= Ax \\
+	det(A-rI) &= 0 \\
+	det(\begin{bmatrix}
+		-r & 1 \\
+		-1 & -r
+	\end{bmatrix}) &= r^{2} + 1 = 0 \\
+	r \pm i
+  \end{align*}
+  
+  Extract linear equations from matrix:
+  
+  \begin{equation}
+  	\begin{bmatrix}
+		-i & 1 \\
+		-1 & -i
+  	\end{bmatrix}
+  \end{equation}
+  
+  \begin{align*}
+	  -iu_{1} + u_{2} &= 0 \\
+	  -u_{1} - iu_{2} &= 0
+  \end{align*}
+  
+  If you don't drop an equation, one of your eigen values was wrong.
+  
+  Multiply first eqn by $i$:
+  
+  \begin{align*}
+	  u_{1} + iu_{2} &= 0 \\
+	  -u_{1} - iu_{2} &= 0
+  \end{align*}
+  
+  and simplify:
+  
+  \begin{equation*}
+	  \boxed{u_{1} + iu_{2} = 0}
+  \end{equation*}
+  
+  \begin{align*}
+ 	u_{1} &= -is \\
+	u_{2} &= s
+  \end{align*}
+  
+  so
+  
+  % u = [-is \\ s] = s[-i \\ 1]
+  
+  and
+  
+  \begin{equation}
+  	u = \begin{bmatrix}
+  		0 \\ 1
+  	\end{bmatrix} + i \begin{bmatrix}
+  						-1 \\ 0
+  					  \end{bmatrix}
+  \end{equation}
+  
+  \subsection*{general solt'n}
+  
+  \begin{equation}
+  	\Big(e^{\alpha t}\cos{(\beta t)}a - e^{\alpha t}\sin{(\beta t)}b\Big)C1 +
+	\Big(e^{\alpha t}\cos{(\beta t)}a + e^{\alpha t}\sin{(\beta t)}b\Big)C2
+  \end{equation}
+  
+  \begin{equation*}
+  	x(t) = \Big(\cos{t \begin{bmatrix}
+  						0 \\ 1
+  						\end{bmatrix}}
+				- \sin{t \begin{bmatrix}
+							-1 \\ 0
+							\end{bmatrix}}\Big)C_{1}
+		 +
+		 \Big(\sin{t \begin{bmatrix}
+		   						0 \\ 1
+		   						\end{bmatrix}}
+		 				+ \cos{t \begin{bmatrix}
+		 							-1 \\ 0
+		 							\end{bmatrix}}\Big)C_{2}
+  \end{equation*}
+  
+  \begin{equation*}
+	x_{1}(t) = \begin{bmatrix}
+					\sin{t} \\
+					\cos{t}
+				\end{bmatrix} ,
+	x_{2}(t) = \begin{bmatrix}
+					-\cos{t} \\
+					\sin{t}
+				\end{bmatrix}
+  \end{equation*}
+  
+  \subsection*{construct fundamental matrix $X(t)$}
+  
+  \begin{equation}
+  	X(t) = \begin{bmatrix}
+				\sin{t} & -\cos{t} \\
+				cos{t} & \sin{t}
+		  	\end{bmatrix}
+  \end{equation}
+  
+  \subsection*{find $X^{-1}$}
+  
+  For 2 by 2,
+  
+  \begin{equation*}
+  	A^{-1} = \frac{1}{ad-bc} \begin{bmatrix}
+  								d & -b \\
+								-c & a
+  							 \end{bmatrix}
+  \end{equation*}
+  
+  \begin{equation*}
+  	X^{-1} = \frac{1}{1} \begin{bmatrix}
+  							\sin{t} & \cos{t} \\
+							-\cos{t} & \sin{t}
+  						 \end{bmatrix}
+  \end{equation*}
+  
+  \begin{equation*}
+	\begin{bmatrix}
+		\sin{t} & \cos{t} \\
+		-\cos{t} & \sin{t}
+	\end{bmatrix}
+	\begin{bmatrix}
+		8\sin{t} \\
+		0
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		8\sin^{2}{t} \\
+		-8\sin{t}\cos{t}
+	\end{bmatrix}
+  \end{equation*}
+  
+  \subsection*{integrate to find $C(t)$}
+  
+  \begin{equation*}
+  	\int
+	\begin{bmatrix}
+		8\sin^{2}{t} \\
+		-8\sin{t}\cos{t}
+	\end{bmatrix}
+	dt =
+	\begin{bmatrix}
+		\int 8\sin^{2}{t} dt \\
+		\int -8\sin{t}\cos{t} dt
+	\end{bmatrix}
+  \end{equation*}
+  
+  \subsection*{integrate (i)}
+  
+  Use $\sin^{2}{t}=\frac{1-\cos{2t}}{2}$ and $\cos^{2}{t} = \frac{1+\cos{2t}}{2}$
+  
+  \begin{equation*}
+  	\int 8\sin^{2}{t} dt = \int 4 (1 - \cos{2t})dt = \int (4 - 4\cos{2t})dt = 4t - 2\sin{2t} + C_{1}
+  \end{equation*}
+  
+  \subsection*{integrate (ii)}
+  
+  \begin{equation*}
+  	\int -8 \sin{t}\cos{t}dt = 2\cos{2t} + C_{2}
+  \end{equation*}
+ 
+ \subsection*{integrate (net)}
+ 
+ \begin{equation*}
+ 	C(t) =
+	\begin{bmatrix}
+		4t - 2\sin{2t} + C_{1} \\
+		2\cos{2t} + C_{2}
+	\end{bmatrix}
+ \end{equation*}
+ 
+ \subsection*{general solution}
+ 
+ \[
+ 	x(t) = X(t)\cdot C(t)
+ \]
+ 
+ In sum:
+ 
+ \begin{enumerate}
+ 	\item find $X(t)$
+	\item find $X^{-1}$
+	\item find $C(t)$
+	\item gen solt'n
+ \end{enumerate}
+ 
+ \newpage
+ 
+ \section*{special fundamental matrix}
+ 
+ \[
+ 	\frac{dx}{dt} = Ax
+ \]
+ 
+ \[
+ 	\frac{dX}{dt} = AX \leftarrow m\times n\text{matrices}
+ \]
+ 
+ \[
+ 	x(t) = X(t)C
+ \]
+ 
+ special fundamental matrix: instead of generic $C$ vals in col, you see initial conditions:
+ 
+ \[
+ 	x(t) = X(t) x(0)
+ \]
+ 
+ an easy way to incorporate initial conditions, and computing this special $X(t)$ from the
+ generic $X(t)$ isn't even hard.
+ 
+ start with $Y(t)$, then, special $X(t)$ can be found by
+ 
+ \[
+ 	X(t) = Y(t)\Big(Y(0)\Big)^{-1}
+ \]
+ 
+\end{document}
