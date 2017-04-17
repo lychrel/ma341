@@ -1,0 +1,261 @@
+\documentclass[twocolumn,draft]{article}
+\usepackage{savetrees}
+% a more conservative option:
+% \documentclass[]{article}
+% \usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{todonotes}
+\usepackage{graphicx}
+\usepackage{showlabels}
+
+\usepackage[english]{babel}
+\usepackage{blindtext}
+% \Blindtext to use.
+
+\RequirePackage[l2tabu, orthodox]{nag}
+\usepackage[all,warning]{onlyamsmath}
+
+\usepackage{hyperref}
+
+% red and blue text for questions
+\newcommand{\rt}[1]{\textcolor{red}{#1}}
+\newcommand{\bt}[1]{\textcolor{blue}{#1}}
+
+
+
+\title{MA 341, 4/7/17}
+\author{John M. Lynch\footnote{Undergraduate ECE/Physics, NCSU, Raleigh, NC 27705. E-Mail: \texttt{jmlynch3@ncsu.edu}}}
+\date{\today}
+
+\begin{document}
+  \maketitle
+  
+  \section*{Midterm Review}
+  
+  Target: systems of differential equations.
+  
+  Outline of topics (similar to last time):
+  
+  \begin{enumerate}
+	  
+  	\item \rt{Homogeneous systems}
+		\begin{equation*}
+			\frac{dx}{dt}= Ax
+		\end{equation*}
+		Solve for:
+		\begin{enumerate}
+			\item gen solution
+			\item IVP
+			\item fundamental matrix
+			\item how many eigenvectors
+		\end{enumerate}
+		Won't have to worry about edge cases (e.g. insufficient number of eigenvectors)
+		
+	\item \rt{Non-Homogeneous Systems}
+		\begin{equation*}
+			\frac{dx}{dt} = Ax + \rho(t)
+		\end{equation*}
+		Using
+		\begin{enumerate}
+			\item Undetermined coefficients
+			\item Variation of parameters
+		\end{enumerate}
+		Assumes you can handle homogeneous systems and that you can \emph{integrate by parts}
+		
+	\item \rt{Eigenvector Properties}
+		\begin{enumerate}
+			\item given eigenvalues $r_{1}, \ldots, r_{n}$, all distinct, multiplicity $1$,
+				the corresponding eigenvectors are independent
+			\item multiple eigenvalues: if sufficiently many eigenvectors exist, they can be
+				selected as independent ones.
+		\end{enumerate}
+	
+	\item 
+  \end{enumerate}
+  
+  \section*{Examples}
+  
+  \begin{enumerate}
+  	\item \bt{Inverting a matrix (Gauss-Jordan)}
+		\begin{align*}
+			\left[
+			\begin{array}{ccc|ccc}
+				1 & 1 & 1  & 1 & 0 & 0 \\
+				1 & -1 & 2 & 0 & 1 & 0 \\
+				1 & 1 & 4  & 0 & 0 & 1
+			\end{array} \right] \\
+			&= 
+			\left[
+			\begin{array}{ccc|ccc}
+				1 & 1 & 1  & 1 & 0 & 0 \\
+				0 & -2 & 1 & -1 & 1 & 0 \\
+				1 & 0 & 1  & \frac{-1}{3} & 0 & 1
+			\end{array} \right] \\
+			&= 
+			\left[
+			\begin{array}{ccc|ccc}
+				1 & 0 & 0  & 1 			  & \frac{1}{2} 	& \frac{-1}{2} \\
+				0 & 1 & 0  & \frac{1}{3}  & \frac{-1}{2} 	& \frac{1}{6} \\
+				0 & 0 & 1  & \frac{-1}{3} & 0 				& \frac{1}{3}
+			\end{array} \right] \\
+				A^{-1} &= 
+				\begin{bmatrix}
+					1 			  & \frac{1}{2} 	& \frac{-1}{2} \\
+					\frac{1}{3}  & \frac{-1}{2} 	& \frac{1}{6} \\
+					\frac{-1}{3} & 0 				& \frac{1}{3}
+				\end{bmatrix}
+		\end{align*}
+	
+	\item \bt{Multiple Eigenvalues}
+		\begin{equation*}
+			A = 
+			\begin{bmatrix}
+				1 & 2 & -1 \\
+				0 & 1 & 0 \\
+				0 & 1 & 1
+			\end{bmatrix}
+		\end{equation*}
+		
+		\begin{align*}
+			A-rI &=
+			\begin{vmatrix}
+				1-r & 2 & -1 \\
+				0 & 1-r & 0 \\
+				0 & 1 & 1-r
+			\end{vmatrix} \\
+			&= (1-r)\left[(1-r)^{2}\right] \\
+			&= (1-r)^{3} \\
+			r &= 1 \tag*{multiplicity 3}
+		\end{align*}
+
+		Plug $r$ into the matrix
+		
+		\begin{align*}
+			\begin{bmatrix}
+				0 & 2 & -1 \\
+				0 & 0 & 0 \\ 
+				0 & 1 & 0
+			\end{bmatrix}
+		\end{align*}
+		
+		and extract equations:
+		
+		\begin{align*}
+			2u_{2} - u_{3} &= 0 \\
+			u_{2} &= 0 \\
+			0 &= 0
+		\end{align*}
+		
+		which is an insufficient number of eigenvectors.
+		
+		\begin{align*}
+			u_{2} = u_{3} &= 0 \\
+			0 &= 0 \\
+			&\Rightarrow
+			\begin{bmatrix}
+				s \\ 0 \\ 0
+			\end{bmatrix} \\
+			&= s \begin{bmatrix}
+				 	   1 \\ 0 \\ 0
+				 \end{bmatrix}
+		\end{align*}
+	
+	\item \bt{Multiple Eigenvalues (II)}
+		\begin{align*}
+			A &= \begin{bmatrix}
+					-1 & 1 & 0 \\
+					 1 & 2 & 1 \\
+					 0 & 3 & 1
+				 \end{bmatrix} \\
+			\text{det}(A-rI) &= \begin{vmatrix}
+									-1-r & 1 & 0 \\
+									 1 & 2-r & 1 \\
+									 0 & 3 & 1-r
+								\end{vmatrix} \\
+				 &= -(1+r)\left[(2-r)(-1-r)-3\right] \\
+				 &= -1\left[(-1-r)-1-0\right] \\
+				 &= (1+r)\left[r^{2}-r-2-3\right] + (1+r) \\
+				 &= -(1+r)(r-3)(r+2) \\
+				 r_{1} &= -1 \\
+				 r_{2} &= -2 \\
+				 r_{3} &= 3
+		\end{align*}
+		
+		Plug each into A-rI:
+		
+		\begin{align*}
+			   &\boxed{r = -1}: \\
+			A-rI &= \begin{bmatrix}
+						0 & 1 & 0 \\
+						1 & 3 & 1 \\
+						0 & 3 & 0
+					\end{bmatrix} \\
+					   u_{2} &= 0 \\
+			   u_{1} + u_{3} &= 0 \\
+			   u &= \begin{bmatrix}
+			   			-s \\ 0 \\ s
+			   		\end{bmatrix} \\
+			  s &= \begin{bmatrix}
+			  			-1 \\ 0 \\ 1
+			  	   \end{bmatrix} \\
+			&\boxed{r = -2}: \\
+	   A - rI &= \begin{bmatrix}
+	   				1 & 1 & 0 \\
+					1 & 4 & 1 \\
+					0 & 3 & 1
+	   			 \end{bmatrix} \\
+				 u_{1} + u_{2} &= 0 \\
+				 u_{1} + 4u_{2} + u_{3} &= 0 \\
+				 3u_{2} + u_{3} &= 0 \\
+				 u &= s \begin{bmatrix}
+				 			-1 \\ 1 \\ -3
+				 		\end{bmatrix} \\
+			&\boxed{r = 3}: \\
+			4u_{1} + u_{2} &= 0 \\
+			u_{1} - u_{2} + u_{3} = 0 \\
+			3u_{2} - 4u_{3} = 0 \\
+			% new eqns
+			u_{1} - u_{2} + u_{3} &= 0 \\
+			-3u_{2} + 4u_{3} &= 0 \\
+			u_{2} &= 4s \\
+			u_{3} &= 3s \\
+			u_{1}-4s+3s &= 0 \\
+			u_{1} &= s \\
+			u &= \begin{bmatrix}
+					s \\ 4s \\ 3s
+				\end{bmatrix} \\
+			  &= s
+			  \begin{bmatrix}
+			  	 	1 \\ 4 \\ 3
+			  \end{bmatrix}
+		\end{align*}
+		
+		The system of algebraic equations will reduce to a single equation.
+		
+		If multiple:
+		
+		\begin{align*}
+			u_{1} -u_{2} + u_{3} &= 0 \\
+			u_{2} &= s_{1} \\
+			u_{3} &= s_{2} \\
+			u_{1} = s_{1}-s_{2} \\
+			u &= \begin{bmatrix}
+					s_{1}-s_{2} \\
+					s_{1} \\ 
+					s_{2}
+				\end{bmatrix} \\
+				% split into (s1, s1, 0) + (-s2, 0 ,s2)
+		\end{align*}
+  \end{enumerate}
+  
+ 
+\end{document}
